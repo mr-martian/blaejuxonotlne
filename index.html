@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>blæ̅jûXõno̘tlη̈ε̊ conjugator</title>
+  </head>
+  <body>
+    <div id="inputs"></div>
+    <button onclick="add_verb();">Add Verb</button>
+    <datalist id="adverb-lemma"></datalist>
+    <datalist id="verb-lemma"></datalist>
+    <datalist id="subj-agr"></datalist>
+    <datalist id="obj-agr"></datalist>
+    <datalist id="iobj-agr"></datalist>
+    <datalist id="mood"></datalist>
+    <datalist id="voice"></datalist>
+    <template id="adverb-row">
+      <tr class="adverb">
+	<td>
+	  <input class="adverb-lemma" list="adverb-lemma"></input>
+	</td>
+	<td>
+	  <span class="display"></span>
+	</td>
+      </tr>
+    </template>
+    <template id="verb-block">
+      <details class="verb-block" open>
+	<summary class="final-form">clause</summary>
+	<details>
+	  <summary>Inflection Breakdown</summary>
+	  <div class="conjugation-info"></div>
+	</details>
+	<table>
+	  <tr>
+	    <td>
+	      <table>
+		<tr class="component" data-pos="6">
+		  <td>lemma</td>
+		  <td>
+		    <input class="verb-lemma" type="text"
+			   list="verb-lemma"></input>
+		  </td>
+		  <td><span class="display"></span></td>
+		</tr>
+		<tr class="component" data-pos="7">
+		  <td>subject</td>
+		  <td>
+		    <input class="subj-agr" type="text"
+			   list="subj-agr"></input>
+		  </td>
+		  <td><span class="display"></span></td>
+		</tr>
+		<tr class="component" data-pos="1">
+		  <td>object</td>
+		  <td>
+		    <input class="obj-agr" type="text"
+			   list="obj-agr"></input>
+		  </td>
+		  <td><span class="display"></span></td>
+		</tr>
+		<tr class="component" data-pos="2">
+		  <td>iobj</td>
+		  <td>
+		    <input class="iobj-agr" type="text"
+			   list="iobj-agr"></input>
+		  </td>
+		  <td><span class="display"></span></td>
+		</tr>
+		<tr class="component" data-pos="4">
+		  <td>mood</td>
+		  <td>
+		    <input class="mood" type="text"
+			   list="mood"></input>
+		  </td>
+		  <td><span class="display"></span></td>
+		</tr>
+		<tr class="component" data-pos="5">
+		  <td>voice</td>
+		  <td>
+		    <input class="voice" type="text"
+			   list="voice"></input>
+		  </td>
+		  <td><span class="display"></span></td>
+		</tr>
+	      </table>
+	    </td>
+	    <td class="component" data-pos="3">
+	      Adverbs
+	      <table class="adverb-block">
+	      </table>
+	    </td>
+	  </tr>
+	</table>
+      </details>
+    </template>
+    <script type="text/javascript" src="data.js"></script>
+    <script type="text/javascript" src="main.js"></script>
+  </body>
+</html>
