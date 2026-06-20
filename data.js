@@ -340,7 +340,7 @@ const object_prefix = {
     },
     O3SG: {
 	form: "blæ9",
-	p: "?",
+	p: "N/S?",
 	def: "3rd person singular object",
     },
     OXSG: {
@@ -360,7 +360,7 @@ const object_prefix = {
     },
     O3PL: {
 	form: "nu1",
-	p: "?",
+	p: "W",
 	def: "3rd person plural object",
     },
     OXPL: {
@@ -385,7 +385,7 @@ const object_prefix = {
     },
     OXAPL: {
 	form: "mo4",
-	p: "?",
+	p: "N",
 	def: "antiplural no object",
     },
 };
@@ -408,7 +408,7 @@ const indirect_object_prefix = {
     },
     IXSG: {
 	form: "ju2",
-	p: "?",
+	p: "N",
 	def: "singular non-indirect object",
     },
     I1PL: {
@@ -428,7 +428,7 @@ const indirect_object_prefix = {
     },
     IXPL: {
 	form: "ju1",
-	p: "?",
+	p: "N",
 	def: "plural no indirect object",
     },
     I1APL: {
@@ -448,7 +448,7 @@ const indirect_object_prefix = {
     },
     IXAPL: {
 	form: "ju4",
-	p: "?",
+	p: "N",
 	def: "antiplural no indirect object",
     },
 };
@@ -456,17 +456,17 @@ const indirect_object_prefix = {
 const mood_prefix = {
     SUB: {
 	form: "",
-	p: "?",
+	p: "S/∅?",
 	def: "subjunctive",
     },
     JUNC: {
 	form: "Xo16",
-	p: "?",
+	p: "E",
 	def: "junctive",
     },
     SUP: {
 	form: "hw5",
-	p: "?",
+	p: "S",
 	def: "superjunctive",
     },
     INJ: {
@@ -484,11 +484,11 @@ const mood_prefix = {
 const voice_prefix = {
     "SOI.POS": {
 	form: "dε9",
-	p: "?",
+	p: "S/∅",
     },
     "SOI.NEG": {
 	form: "dε10",
-	p: "?",
+	p: "S",
     },
     "SIO.POS": {
 	form: "cΩ11",
@@ -500,7 +500,7 @@ const voice_prefix = {
     },
     "OSI.POS": {
 	form: "no13t",
-	p: "?",
+	p: "S",
     },
     "OSI.NEG": {
 	form: "tω15",
@@ -535,7 +535,7 @@ const voice_prefix = {
 const subject_suffix = {
     S1SG: {
 	form: "ω5",
-	p: "?",
+	p: "S",
 	def: "1st person singular subject",
     },
     S2SG: {
@@ -545,7 +545,7 @@ const subject_suffix = {
     },
     S3SG: {
 	form: "o9",
-	p: "?",
+	p: "N",
 	def: "3rd person singular subject",
     },
     SXSG: {
@@ -585,7 +585,7 @@ const subject_suffix = {
     },
     S3APL: {
 	form: "y4",
-	p: "?",
+	p: "N",
 	def: "3rd person antiplural subject",
     },
     SXAPL: {
