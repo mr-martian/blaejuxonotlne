@@ -14,7 +14,7 @@ function add_verb() {
     const template = document.querySelector('#verb-block');
     let clone = document.importNode(template.content, true);
     target.appendChild(clone);
-    let target2 = target.querySelector('.adverb-block');
+    let target2 = target.lastElementChild.querySelector('.adverb-block');
     const template2 = document.querySelector('#adverb-row');
     let clone2 = document.importNode(template2.content, true);
     target2.appendChild(clone2);
@@ -79,15 +79,16 @@ function shift_tones(seq) {
 
 function render_word(seq) {
     const has_omega = seq.some(x => (x.p == 'ω'));
-    console.log(seq, 'has_omega', has_omega);
     let prev_vowel = false;
     let form = '';
     let phono = '<table>';
+    let num = 0;
     for (let i = 0; i < seq.length; i++) {
 	let c = seq[i];
 	let next_vowel = (((i + 1) < seq.length) &&
 			  phonemes[seq[i+1].p].va);
 	let p = phonemes[c.p];
+	num += p.n;
 	let subform = '';
 	if (prev_vowel && has_omega) {
 	    subform += p.da || p.a || '';
@@ -106,11 +107,17 @@ function render_word(seq) {
 	prev_vowel = p.vz;
     }
     phono += '</table>';
-    return {form: form, table: phono};
+    return {form: form, table: phono, numerology: num};
 }
 
 function collapse_seq(seq) {
     return seq.map(c => (c.p + (c.t ? c.t : ''))).join('');
+}
+
+function update_json_export() {
+    let seq = Array.from(document.querySelectorAll('.verb-block')).map(
+	b => JSON.parse(b.getAttribute('data-json') || '{}'));
+    document.getElementById('json-blob').value = JSON.stringify(seq);
 }
 
 function update_verb_block(block) {
@@ -119,8 +126,10 @@ function update_verb_block(block) {
 	    return {
 		pos: parseInt(el.getAttribute('data-pos')),
 		val: el.getAttribute('data-form') || '',
+		json: JSON.parse(el.getAttribute('data-lemma') || '""'),
 	    };
 	});
+    block.setAttribute('data-json', JSON.stringify(seq));
     seq.sort((a, b) => (a.pos - b.pos));
     let underlying = seq.map(x => x.val).join('');
     let phoneme_seq = parse_phoneme_string(underlying);
@@ -129,7 +138,8 @@ function update_verb_block(block) {
     let sum = block.querySelector('summary.final-form');
     sum.innerHTML = data.form;
     let out = block.querySelector('div.conjugation-info');
-    out.innerHTML = `<p>Underlying: ${underlying}</p><p>Tone Shift: ${collapse_seq(post_tone)}</p><p>Surface: ${data.form}</p><p>Phonetic:</p>${data.table}`;
+    out.innerHTML = `<p>Underlying: ${underlying}</p><p>Tone Shift: ${collapse_seq(post_tone)}</p><p>Surface: ${data.form}</p><p>Numerological Value: ${data.numerology}</p><p>Phonetic:</p>${data.table}`;
+    update_json_export();
 }
 
 function update_adverb_block(block) {
@@ -137,6 +147,11 @@ function update_adverb_block(block) {
 	'data-form',
 	Array.from(block.querySelectorAll('tr.adverb')).map(
 	    el => el.getAttribute('data-form') || '').join(''));
+    block.setAttribute(
+	'data-lemma',
+	JSON.stringify(
+	    Array.from(block.querySelectorAll('input.adverb-lemma')).map(
+		el => el.value)));
 }
 
 function update_morpheme(input, output) {
@@ -146,6 +161,7 @@ function update_morpheme(input, output) {
     if (!val || !lookup.hasOwnProperty(cls)) {
 	output.innerHTML = '';
 	row.setAttribute('data-form', '');
+	row.setAttribute('data-lemma', '');
     } else {
 	const dct = lookup[cls];
 	if (dct.hasOwnProperty(val)) {
@@ -157,11 +173,52 @@ function update_morpheme(input, output) {
 	    output.innerHTML = 'unknown morpheme';
 	    row.setAttribute('data-form', '');
 	}
+	row.setAttribute('data-lemma', JSON.stringify(val));
     }
     if (cls == 'adverb-lemma') {
 	update_adverb_block(row.closest('.component'));
     }
     update_verb_block(row.closest('.verb-block'));
+}
+
+function get_display(target) {
+    return target.closest('tr').querySelector('span.display');
+}
+
+function import_json() {
+    let data = JSON.parse(document.getElementById('json-blob').value);
+    let div = document.getElementById('inputs');
+    div.innerHTML = '';
+    data.forEach(blob => {
+	add_verb();
+	let vb = div.lastElementChild;
+	blob.forEach(morph => {
+	    let p = parseInt(morph.pos);
+	    let v = morph.json;
+	    if (isNaN(p) || !v) {
+		return;
+	    }
+	    if (p == 3) {
+		v.forEach(
+		    v2 => {
+			if (!v2) {
+			    return;
+			}
+			let inp = vb.querySelector('table.adverb-block tr:last-of-type input');
+			if (inp) {
+			    inp.value = v2;
+			    update_morpheme(inp, get_display(inp));
+			}
+		    });
+	    } else {
+		let inp = vb.querySelector(`tr[data-pos="${p}"] input`);
+		if (inp) {
+		    inp.value = v;
+		    update_morpheme(inp, get_display(inp));
+		}
+	    }
+	});
+    });
 }
 
 function setup() {
@@ -172,7 +229,7 @@ function setup() {
     document.addEventListener('change', function(e) {
 	let target = e.target.closest('input');
 	if (target) {
-	    let output = target.closest('tr').querySelector('span.display');
+	    let output = get_display(target);
 	    if (output) {
 		update_morpheme(target, output);
 	    }

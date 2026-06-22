@@ -541,7 +541,7 @@ const subject_suffix = {
     },
     S2SG: {
 	form: "e1",
-	p: "?",
+	p: "W",
 	def: "2nd person singular subject",
     },
     S3SG: {
@@ -551,37 +551,37 @@ const subject_suffix = {
     },
     SXSG: {
 	form: "υ4",
-	p: "?",
+	p: "E",
 	def: "singular non-subject",
     },
     S1PL: {
 	form: "ε8",
-	p: "?",
+	p: "S",
 	def: "1st person plural subject",
     },
     S2PL: {
 	form: "i1",
-	p: "?",
+	p: "W",
 	def: "2nd person plural subject",
     },
     S3PL: {
 	form: "Ω16",
-	p: "?",
+	p: "N",
 	def: "3rd person plural subject",
     },
     SXPL: {
 	form: "η3",
-	p: "?",
+	p: "E",
 	def: "plural no subject",
     },
     S1APL: {
 	form: "nu8no7",
-	p: "?",
+	p: "S",
 	def: "1st person antiplural subject",
     },
     S2APL: {
 	form: "w9",
-	p: "?",
+	p: "W",
 	def: "2nd person antiplural subject",
     },
     S3APL: {
@@ -591,7 +591,7 @@ const subject_suffix = {
     },
     SXAPL: {
 	form: "ω5",
-	p: "?",
+	p: "E",
 	def: "antiplural no subject",
     },
 };
@@ -626,6 +626,46 @@ const verbs = {
 	form: "w4ri1te5",
 	argumentative: true,
     },
+    "orb": {
+	form: "Zα7gu9",
+    },
+    "rest": {
+	form: "de9rvo1ng",
+	def: "rest, sleep",
+    },
+    "use": {
+	form: "pe1rdu10f",
+    },
+    "depart": {
+	form: "kε9ste2l",
+	def: "depart, remove",
+	argumentative: true,
+    },
+    "endure": {
+	form: "di12e9",
+    },
+    "forget": {
+	form: "ke11rn",
+    },
+    "oppose": {
+	form: "Qi6",
+	def: "oppose, be enemy of",
+    },
+    "lava": {
+	form: "Gw5m",
+    },
+    "useful": {
+	form: "di12e3",
+    },
+    "recur": {
+	form: "ble6h",
+    },
+    "age": {
+	form: "GΩ7m",
+    },
+    "one": {
+	form: "Tu2x",
+    },
 };
 
 const adverbs = {
@@ -644,5 +684,32 @@ const adverbs = {
 	def: "numerology agreement with a multiple of 5",
 	form: "ω1m",
 	mystical: true,
+    },
+    "able": {
+	def: "able, possible",
+	form: "Qi5",
+    },
+    "need": {
+	def: "had to, needed, was necessary",
+	form: "QΩ12m",
+    },
+    "effort": {
+	def: "with effort; with difficulty",
+	form: "e9α1sy2",
+    },
+    "exactly": {
+	form: "so1rtα2",
+    },
+    "after": {
+	form: "qi3T",
+    },
+    "habitual": {
+	form: "o1nce15",
+    },
+    "past": {
+	form: "TXe13n",
+    },
+    "future": {
+	form: "Go15rm",
     },
 };
