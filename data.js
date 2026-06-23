@@ -331,62 +331,62 @@ const phonemes = {
 const object_prefix = {
     O1SG: {
 	form: "ge1",
-	p: "?",
+	p: "N",
 	def: "1st person singular object",
     },
     O2SG: {
 	form: "Gi12",
-	p: "?",
+	p: "E",
 	def: "2nd person singular object",
     },
     O3SG: {
 	form: "blæ9",
-	p: "N/S?",
+	p: "S",
 	def: "3rd person singular object",
     },
     OXSG: {
 	form: "rw6",
-	p: "?",
+	p: "W",
 	def: "singular non-object",
     },
     O1PL: {
 	form: "mo4",
-	p: "?",
+	p: "N",
 	def: "1st person plural object",
     },
     O2PL: {
 	form: "gι10",
-	p: "?",
+	p: "E",
 	def: "2nd person plural object",
     },
     O3PL: {
 	form: "nu1",
-	p: "W",
+	p: "S",
 	def: "3rd person plural object",
     },
     OXPL: {
 	form: "ge2",
-	p: "?",
+	p: "W",
 	def: "plural no object",
     },
     O1APL: {
 	form: "bη1",
-	p: "?",
+	p: "N",
 	def: "1st person antiplural object",
     },
     O2APL: {
 	form: "Qi7",
-	p: "?",
+	p: "E",
 	def: "2nd person antiplural object",
     },
     O3APL: {
 	form: "qy2",
-	p: "?",
+	p: "S",
 	def: "3rd person antiplural object",
     },
     OXAPL: {
 	form: "mo4",
-	p: "N",
+	p: "W",
 	def: "antiplural no object",
     },
 };
@@ -394,17 +394,17 @@ const object_prefix = {
 const indirect_object_prefix = {
     I1SG: {
 	form: "jι8",
-	p: "?",
+	p: "E",
 	def: "1st person singular indirect object",
     },
     I2SG: {
 	form: "mη5",
-	p: "?",
+	p: "S",
 	def: "2nd person singular indirect object",
     },
     I3SG: {
 	form: "lυ7",
-	p: "?",
+	p: "W",
 	def: "3rd person singular indirect object",
     },
     IXSG: {
@@ -414,17 +414,17 @@ const indirect_object_prefix = {
     },
     I1PL: {
 	form: "pe3",
-	p: "?",
+	p: "E",
 	def: "1st person plural indirect object",
     },
     I2PL: {
 	form: "kw6",
-	p: "?",
+	p: "S",
 	def: "2nd person plural indirect object",
     },
     I3PL: {
 	form: "pw12",
-	p: "?",
+	p: "W",
 	def: "3rd person plural indirect object",
     },
     IXPL: {
@@ -434,17 +434,17 @@ const indirect_object_prefix = {
     },
     I1APL: {
 	form: "Xυ5",
-	p: "?",
+	p: "E",
 	def: "1st person antiplural indirect object",
     },
     I2APL: {
 	form: "bε6",
-	p: "?",
+	p: "S",
 	def: "2nd person antiplural indirect object",
     },
     I3APL: {
 	form: "du7",
-	p: "?",
+	p: "W",
 	def: "3rd person antiplural indirect object",
     },
     IXAPL: {
@@ -457,7 +457,7 @@ const indirect_object_prefix = {
 const mood_prefix = {
     SUB: {
 	form: "",
-	p: "S/∅?",
+	p: "N",
 	def: "subjunctive",
     },
     JUNC: {
@@ -472,12 +472,12 @@ const mood_prefix = {
     },
     INJ: {
 	form: "To7",
-	p: "?",
+	p: "W",
 	def: "injunctive",
     },
     DISJ: {
 	form: "ro6",
-	p: "?",
+	p: "N",
 	def: "disjunctive",
     },
 };
@@ -485,51 +485,51 @@ const mood_prefix = {
 const voice_prefix = {
     "SOI.POS": {
 	form: "dε9",
-	p: "S/∅",
+	p: "W",
     },
     "SOI.NEG": {
 	form: "dε10",
-	p: "S",
+	p: "N",
     },
     "SIO.POS": {
 	form: "cΩ11",
-	p: "?",
+	p: "E",
     },
     "SIO.NEG": {
 	form: "Jη5",
-	p: "?",
+	p: "S",
     },
     "OSI.POS": {
 	form: "no13t",
-	p: "S",
+	p: "W",
     },
     "OSI.NEG": {
 	form: "tω15",
-	p: "?",
+	p: "N",
     },
     "OIS.POS": {
 	form: "lw10",
-	p: "?",
+	p: "E",
     },
     "OIS.NEG": {
 	form: "sw1",
-	p: "?",
+	p: "S",
     },
     "ISO.POS": {
 	form: "Ji7",
-	p: "?",
+	p: "W",
     },
     "ISO.NEG": {
 	form: "Gu1",
-	p: "?",
+	p: "N",
     },
     "IOS.POS": {
 	form: "ky8",
-	p: "?",
+	p: "E",
     },
     "IOS.NEG": {
 	form: "fe2",
-	p: "?",
+	p: "S",
     },
 };
 

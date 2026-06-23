@@ -120,6 +120,82 @@ function update_json_export() {
     document.getElementById('json-blob').value = JSON.stringify(seq);
 }
 
+function get_word_polarity(seq) {
+    let ct = {N: 0, E: 0, S: 0, W: 0, '∅': 0};
+    seq.forEach(m => {
+	if ([1, 2, 4, 5, 7].includes(m.pos)) {
+	    if (ct.hasOwnProperty(m.polarity)) {
+		ct[m.polarity] += 1;
+	    }
+	}
+    });
+    let ret = {
+	major: '∅',
+	minor: [],
+    };
+    const dirs = ['N', 'E', 'S', 'W', '∅'];
+    dirs.forEach(d => {
+	if (ct[d] > 0) {
+	    if (!dirs.some(d2 => (ct[d] > ct[d2] && ct[d2] > 0))) {
+		ret.minor.push(d);
+	    }
+	    if (!dirs.some(d2 => (d2 != d && ct[d2] >= ct[d]))) {
+		ret.major = d;
+	    }
+	}
+    });
+    return ret;
+}
+
+function arrange_words() {
+    let seq = Array.from(document.querySelectorAll('.verb-block')).map(
+	b => {
+	    return {
+		p: JSON.parse(b.getAttribute('data-polarity')
+			      || '{"major": "", "minor": []}'),
+		f: b.getAttribute('data-form'),
+	    };
+	});
+    let major = parseInt(document.getElementById('major_force').value);
+    let minor = parseInt(document.getElementById('minor_force').value);
+    const push = {
+	NN: 1, NS: -1, SS: 1, SN: -1,
+	WW: 1, WE: -1, EE: 1, EW: 1,
+    };
+    let add = function(x, y) { return x + y; };
+    let comp = function(a, b) {
+	let maj = push[a.major + b.major] || 0;
+	let min = a.minor.map(ad => b.minor.map(
+	    bd => push[ad+bd] || 0).reduce(add, 0)).reduce(add, 0);
+	return maj*major + min*minor;
+    };
+    let dist = seq.map((wi, i) => seq.map((wj, j) => {
+	if (i == j) {
+	    return 0;
+	}
+	return comp(wi.p, wj.p);
+    }));
+    let order = [0];
+    for (let idx = 1; idx < seq.length; idx++) {
+	let best = -1;
+	let best_score = (major+minor) * seq.length * 100;
+	for (let pos = 0; pos <= order.length; pos++) {
+	    let score = order.map(
+		(w, i) => (dist[w][idx] *
+			   (0.5 + Math.abs(pos - 0.5 - i)))).reduce(add, 0);
+	    if (score <= best_score) {
+		best_score = score;
+		best = pos;
+	    }
+	}
+	order = order.slice(0, best).concat([idx], order.slice(best));
+    }
+    let r1 = order.map(n => `<td>${n+1}</td>`).join('');
+    let r2 = order.map(n => `<td>${seq[n].f}</td>`).join('');
+    let para = order.map(n => seq[n].f).join(' ');
+    document.getElementById('order').innerHTML = `<p>${para}</p><table><tr>${r1}</tr><tr>${r2}</tr></table>`;
+}
+
 function update_verb_block(block) {
     let seq = Array.from(block.querySelectorAll('.component')).map(
 	el => {
@@ -127,6 +203,7 @@ function update_verb_block(block) {
 		pos: parseInt(el.getAttribute('data-pos')),
 		val: el.getAttribute('data-form') || '',
 		json: JSON.parse(el.getAttribute('data-lemma') || '""'),
+		polarity: el.getAttribute('data-polarity') || '',
 	    };
 	});
     block.setAttribute('data-json', JSON.stringify(seq));
@@ -138,8 +215,12 @@ function update_verb_block(block) {
     let sum = block.querySelector('summary.final-form');
     sum.innerHTML = data.form;
     let out = block.querySelector('div.conjugation-info');
-    out.innerHTML = `<p>Underlying: ${underlying}</p><p>Tone Shift: ${collapse_seq(post_tone)}</p><p>Surface: ${data.form}</p><p>Numerological Value: ${data.numerology}</p><p>Phonetic:</p>${data.table}`;
+    let pol = get_word_polarity(seq);
+    out.innerHTML = `<p>Underlying: ${underlying}</p><p>Tone Shift: ${collapse_seq(post_tone)}</p><p>Surface: ${data.form}</p><p>Numerological Value: ${data.numerology}</p><p>Major Polarity: ${pol.major}</p><p>Minor Polarities: ${pol.minor.join(', ')}</p><p>Phonetic:</p>${data.table}`;
     update_json_export();
+    block.setAttribute('data-polarity', JSON.stringify(pol));
+    block.setAttribute('data-form', data.form);
+    arrange_words();
 }
 
 function update_adverb_block(block) {
@@ -158,6 +239,7 @@ function update_morpheme(input, output) {
     let val = input.value;
     let cls = input.className;
     let row = input.closest('tr');
+    row.setAttribute('data-polarity', '∅');
     if (!val || !lookup.hasOwnProperty(cls)) {
 	output.innerHTML = '';
 	row.setAttribute('data-form', '');
@@ -169,6 +251,9 @@ function update_morpheme(input, output) {
 	    output.innerHTML = Object.keys(dct2).map(
 		k => `${k}: ${dct2[k]}<br/>`).join('');
 	    row.setAttribute('data-form', dct2.form);
+	    if (dct2.p) {
+		row.setAttribute('data-polarity', dct2.p);
+	    }
 	} else {
 	    output.innerHTML = 'unknown morpheme';
 	    row.setAttribute('data-form', '');
@@ -182,7 +267,10 @@ function update_morpheme(input, output) {
 }
 
 function get_display(target) {
-    return target.closest('tr').querySelector('span.display');
+    let row = target.closest('tr');
+    if (row) {
+	return row.querySelector('span.display');
+    }
 }
 
 function import_json() {

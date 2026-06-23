@@ -2,11 +2,22 @@
 <html>
   <head>
     <meta charset="utf-8"/>
-    <title>blæ̅jûXõno̘tlη̈ε̊ conjugator</title>
+    <title>blæ̅jûXõno̘tlη̈ε̊ Conjugator</title>
   </head>
   <body>
+    <h1>blæ̅jûXõno̘tlη̈ε̊ Conjugator</h1>
+    <h2>Words</h2>
     <div id="inputs"></div>
     <button onclick="add_verb();">Add Verb</button>
+    <h2>Order</h2>
+    <label for="major_force">Major Force</label>
+    <input id="major_force" type="number" value="10"
+	   onchange="arrange_words();"></input>
+    <label for="minor_force">Minor Force</label>
+    <input id="minor_force" type="number" value="2"
+	   onchange="arrange_words();"></input>
+    <div id="order"></div>
+    <h2>Import/Export</h2>
     <details>
       <summary>JSON version</summary>
       <textarea id="json-blob"></textarea>
